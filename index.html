@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="TaskApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Task list</title>
+
+	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="app.css">
+</head>
+<body ng-controller="TaskController">
+
+<div class="row">
+
+</div>
+
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-md-3">
+				<ul>
+					<li ng-repeat="task in tasks">{{task.task}}</li>
+				</ul>
+
+				<input ng-model="newTask" type="text" placeholder="New Task"><button ng-click="addTask(newTask)" type="btn btn-default">
+					<span class="glyphicon glyphicon-plus-sign"></span>
+				</button>
+
+				<button type="submit" class="btn btn-primary col-xs-12" ng-click="checkTasks()">Save</button>
+
+			</div>
+
+		</div>
+	</div>
+
+	<script src="node_modules/angular/angular.min.js" type="text/javascript" charset="utf-8" ></script>
+	<script src="app.js" type="text/javascript" charset="utf-8" ></script>
+
+</body>
+</html>
