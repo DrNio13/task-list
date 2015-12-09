@@ -12,7 +12,7 @@ class Connection {
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// echo "successfully connected to db <br>";
 		} catch (PDOException $e) {
-			echo 'ERROR: ' . $e->getMessage();
+			// echo 'ERROR: ' . $e->getMessage();
 		}
 
 		$this->connection = $conn;
@@ -30,7 +30,7 @@ class Connection {
 			return json_encode($result);
 
 		} catch (PDOException $e) {
-			echo $e->getMessage();
+			// echo $e->getMessage();
 		}
 	}
 
@@ -46,23 +46,36 @@ class Connection {
 			$statement = $this->connection->prepare("DELETE FROM tasks");
 			$statement->execute();
 		} catch (PDOException $e) {
-			echo $e->getMessage();
+			// echo $e->getMessage();
 		}
 	}
 
 	// TODO : insert the post data to the server
 	public function insert($post) {
 
+		$p = json_decode($_POST, true);
+		$file = 'data.txt';
+		$current = file_get_contents($file);
+
+		foreach ($p as $key => $value) {
+			$id = $value['id'];
+			$category = $value['category'];
+			$task = $value['task'];
+			$current .= "$id $category $task \n";
+		}
+
+		file_put_contents($file, $current);
+
 		try {
 			$statement = $this->connection->prepare("INSERT INTO `tasks` VALUES (:id,:category, :task)");
 			$statement->execute(array(
 				':id' => $id,
-				':category' => "super market",
-				':task' => "xarti kouzinas",
+				':category' => $category,
+				':task' => $task,
 			));
 
 		} catch (PDOException $e) {
-			echo "error $e " . $e->getMessage();
+			// echo "error $e " . $e->getMessage();
 		}
 
 	}
@@ -70,4 +83,5 @@ class Connection {
 }
 
 $d = new Connection();
-echo $d->showAll();
+// echo $d->showAll();
+// $d->insert();

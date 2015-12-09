@@ -1,17 +1,16 @@
 <?php
 
-require_once 'dbconnection.php';
-
 $_POST = file_get_contents('php://input');
 
-if (isset($_POST)) {
-	header('Content-type: application/json');
-	echo json_encode($_POST);
-	saveData($_POST);
+if (!empty($_POST)) {
+	header('Content-type: text/html');
+	echo 'POST success';
+
 } else {
-	echo "post error occured.";
+	echo "empty POST";
 }
 
-function saveData($post) {
-	$db = new Connection();
-}
+require_once 'dbconnection.php';
+$s = new Connection();
+$s->insert($_POST);
+// print_r(json_decode($_POST, true));
