@@ -54,34 +54,37 @@ class Connection {
 	public function insert($post) {
 
 		$p = json_decode($_POST, true);
+
 		$file = 'data.txt';
 		$current = file_get_contents($file);
 
 		foreach ($p as $key => $value) {
-			$id = $value['id'];
-			$category = $value['category'];
+			// $id = $value['id'];
+			$category = ['category'];
 			$task = $value['task'];
 			$current .= "$id $category $task \n";
+			file_put_contents($file, $current);
+
+			try {
+				$statement = $this->connection->prepare("INSERT INTO `tasks` VALUES (:id,:category, :task)");
+				$statement->execute(array(
+					':id' => $id,
+					':category' => $category,
+					':task' => $task,
+				));
+
+			} catch (PDOException $e) {
+				echo "!error $e " . $e->getMessage();
+			}
 		}
 
-		file_put_contents($file, $current);
-
-		try {
-			$statement = $this->connection->prepare("INSERT INTO `tasks` VALUES (:id,:category, :task)");
-			$statement->execute(array(
-				':id' => $id,
-				':category' => $category,
-				':task' => $task,
-			));
-
-		} catch (PDOException $e) {
-			// echo "error $e " . $e->getMessage();
-		}
+		$p = null;
+		$this->connection = null;
 
 	}
 
 }
 
 $d = new Connection();
-// echo $d->showAll();
-// $d->insert();
+echo $d->showAll();
+// $d->deleteAll();

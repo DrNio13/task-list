@@ -14,20 +14,21 @@
 
 </div>
 
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 
-			<div class="col-md-3">
+			<div class="col-md-8">
 				<ul>
-					<li ng-repeat="task in tasks">{{task.task}}</li>
+					<li class="task" ng-repeat="task in tasksServer ">{{task.task}}</li>
 				</ul>
+			</div>
 
-				<input ng-model="newTask" type="text" placeholder="New Task"><button ng-click="addTask(newTask)" type="btn btn-default">
+			<div class="col-md-4">
+				<input class="add-task" ng-model="newTask" type="text" placeholder="New Task"><button ng-click="addTask(newTask)" type="btn btn-default">
 					<span class="glyphicon glyphicon-plus-sign"></span>
 				</button>
 
 				<button type="submit" class="btn btn-primary col-xs-12" ng-click="checkTasks()">Save</button>
-
 			</div>
 
 		</div>
